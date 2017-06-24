@@ -1,0 +1,48 @@
+plugins {
+    id "jaci.openrio.gradle.GradleRIO" version "2017.1.5" apply false
+}
+
+allprojects {
+    apply plugin: "java"
+    apply plugin: "eclipse"
+    apply plugin: "idea"
+    apply plugin: "jaci.openrio.gradle.GradleRIO"
+
+    frc {
+        team = 2052
+        deploy = false
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+frc {
+    deploy = true
+    robotClass = "com.first.team2052.steamworks.Robot"
+    /*bypass mDNS*/
+    //rioHost = "10.20.52.2"
+}
+
+dependencies {
+    compile wpilib()
+    compile talonSrx()
+
+    compile project(":KnightLib")
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+def robotManifest = {
+    attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
+    attributes 'Robot-Class': frc.robotClass
+}
+
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    manifest robotManifest
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.2.1'
+}

@@ -1,0 +1,9 @@
+project(":KnightLib") {
+    apply plugin: 'java'
+
+    dependencies {
+        compile wpilib()
+
+        compile fileTree(dir: 'libs', include: ['*.jar'])
+    }
+}

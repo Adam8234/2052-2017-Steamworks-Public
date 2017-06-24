@@ -1,0 +1,10 @@
+.gradle
+/bin/
+/dist/
+*/build/
+/build/
+*.iml
+*.ipr
+*.iws
+/.idea/
+
